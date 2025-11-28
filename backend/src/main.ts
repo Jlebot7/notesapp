@@ -4,10 +4,19 @@ import { AppModule } from "./app.module";
 import * as session from "express-session";
 import * as passport from "passport";
 import * as dotenv from "dotenv";
+import { ExpressAdapter } from '@nestjs/platform-express';
+import express from 'express';
+
 dotenv.config();
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+const server = express();
+
+async function createNestServer(expressInstance: express.Express) {
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressInstance),
+  );
+
   app.useGlobalPipes(new ValidationPipe());
 
   app.enableCors({
@@ -26,6 +35,10 @@ async function bootstrap() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  await app.listen(3000);
+  return app.init();
 }
-bootstrap();
+
+export default async function handler(req: any, res: any) {
+  await createNestServer(server);
+  server(req, res);
+}
