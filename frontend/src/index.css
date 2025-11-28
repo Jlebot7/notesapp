@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #90fff6ff;
+  --color-secondary: #FFFFFF;
+  --color-third: #02EAFA;
+}
+
+@layer base {
+  html {
+    font-family: "Montserrat", "sans-serif";
+    font-weight: 500;
+    font-size: 14pt;
+  }
+  body {
+    @apply bg-gradient-to-r from-purple-600 to-blue-600 overflow-x-auto;
+  }
+}
+
+@layer components {
+  .input-box {
+    @apply w-full text-sm bg-transparent border-solid border-2 border-gray-500 px-8 py-3 rounded mb-4 outline-none;
+  }
+  .btn-primary {
+    @apply w-full text-sm bg-violet-500 hover:bg-violet-500 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300 text-white p-3 rounded my-2;
+  }
+  .icon-btn {
+    @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+  }
+  .input-label {
+    @apply text-sm text-slate-900;
+  }
+}
