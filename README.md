@@ -127,6 +127,59 @@ This will:
    - View notes by category by clicking on category names
    - Delete categories using the trash icon next to category names
 
+## Deployment to Vercel
+
+This application is configured for deployment on Vercel. Follow these steps to deploy:
+
+1. **Install Vercel CLI:**
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Login to Vercel:**
+   ```bash
+   vercel login
+   ```
+
+3. **Set up Vercel Postgres:**
+   - Go to your Vercel dashboard and create a new Postgres database
+   - Copy the `DATABASE_URL` from the database settings
+
+4. **Deploy the application:**
+   ```bash
+   vercel --prod
+   ```
+
+5. **Set environment variables in Vercel:**
+   - Go to your project settings in Vercel
+   - Add the following environment variables:
+     - `DATABASE_URL`: Your Vercel Postgres connection string
+     - `JWT_SECRET`: A secure random string for JWT signing
+     - `SESSION_SECRET`: A secure random string for session management
+
+6. **Run database migrations:**
+   After deployment, run migrations on the production database:
+   ```bash
+   vercel env pull .env.local
+   # Edit .env.local to include DATABASE_URL
+   cd backend
+   npm run migrate:up
+   ```
+
+7. **Access the deployed application:**
+   Vercel will provide a URL for your deployed application.
+
+### Environment Variables
+
+For local development, create a `.env` file in the `backend` directory with:
+```
+DATABASE_URL=postgresql://username:password@localhost:5432/notests
+JWT_SECRET=your_jwt_secret
+SESSION_SECRET=your_session_secret
+```
+
+For Vercel deployment, set these in your Vercel project settings.
+
 ## API Endpoints
 
 ### Authentication
